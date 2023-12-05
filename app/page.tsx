@@ -60,6 +60,8 @@ export default function HomePage() {
       <Divider />
       {/* Accordion */}
       <Accordion
+        className={'bg-base-200'}
+        icon="arrow"
         items={[
           { label: 'Accordion 1', content: 'Content 1' },
           { label: 'Accordion 2', content: 'Content 2' },

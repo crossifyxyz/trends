@@ -24,7 +24,7 @@ export default async function handleRemoteCache<T>(
   filter: Record<string, string> = {},
   thresholdHours: number = 12,
   insert: boolean = false
-): Promise<{ message: string; data?: T }> {
+): Promise<{ message: string; data?: Awaited<T> }> {
   // Determine the cache model based on the provided name
   const DynamicCacheModel = CacheModel[modelName]
 
@@ -43,7 +43,7 @@ export default async function handleRemoteCache<T>(
     if (isUpToDate)
       return {
         message: `${modelName} is up to date`,
-        data: latestCache.data as T,
+        data: latestCache.data as Awaited<T>,
       }
 
     // If no data exists or the data is outdated

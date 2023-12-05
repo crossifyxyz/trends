@@ -19,14 +19,14 @@ const openSans = Open_Sans({
   display: 'swap',
 })
 
-const title = 'Inverter Network'
+const title = 'Crossify Trends'
 const { description, applicationName, images } = {
   applicationName: `${title} | Web3 Template`,
   description:
     'Easily edit and deploy your own web3 application with this template.',
   images: [
     {
-      url: 'InverterNetwork/media/main/inverter-dark-banner.png',
+      url: 'crossifyxyz/assets/main/dark-social-banner.png',
     },
   ],
 }
@@ -59,7 +59,7 @@ function RootLayout({ children }: { children: React.ReactNode }) {
       <link rel="manifest" href="/manifest.json" />
       <meta name="apple-mobile-web-app-capable" content="yes" />
       <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-      <meta name="apple-mobile-web-app-title" content="Inverter PWA" />
+      <meta name="apple-mobile-web-app-title" content="Crossify PWA" />
       <meta name="mobile-web-app-capable" content="yes" />
       <meta
         name="viewport"

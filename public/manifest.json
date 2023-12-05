@@ -4,9 +4,9 @@
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
-  "name": "Inverter Network",
-  "short_name": "Inverter",
-  "description": "Inverter Network Next.js App Router Web3",
+  "name": "Crossify | Next.js 14 Web3 Template",
+  "short_name": "Crossify",
+  "description": "Crossify Next.js App Router Web3",
   "icons": [
     {
       "src": "/icon-192x192.png",

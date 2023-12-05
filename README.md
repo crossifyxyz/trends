@@ -1,13 +1,13 @@
 <div align="center">
 
 [![license](https://img.shields.io/badge/license-Apache%202-blue)](/LICENSE.md)
-[![Follow on Twitter](https://img.shields.io/twitter/follow/inverternetwork.svg?label=follow+INVERTER)](https://twitter.com/inverternetwork)
+[![Follow on Twitter](https://img.shields.io/twitter/follow/crossifyxyz.svg?label=follow+CROSSIFY)](https://twitter.com/crossifyxyz)
 
 </div>
 
-## Inverter / Next.js Web3 Template
+## Crossify / Next.js Web3 Template
 
-App Router + Chakra UI Next.js + Redux + Wagmi ( Viem ) + Dynamic + PWA + PipeLine
+App Router + Daisy UI Next.js + Redux + Wagmi ( Viem ) + Dynamic + PWA + PipeLine
 
 ## Configuration
 

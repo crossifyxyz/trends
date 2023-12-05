@@ -43,8 +43,8 @@ export default function Navbar() {
       <NextLink href="/">
         <Image
           priority
-          src="/inverter-light-logo.svg"
-          alt="inverter_logo"
+          src="/crossify-logo.svg"
+          alt="crossify_logo"
           width={42}
           height={42}
         />

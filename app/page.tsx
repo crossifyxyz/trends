@@ -16,12 +16,12 @@ export default function HomePage() {
       {/* Card */}
       <Card>
         <Card.Image
-          src="https://images.mirror-media.xyz/publication-images/2yXY8M-emmKoKGbh5TA_A.jpeg?height=480&width=960"
+          src="https://raw.githubusercontent.com/crossifyxyz/assets/main/dark-social-banner.png"
           alt="Brand"
         />
         <Card.Body>
-          <Card.Title tag="h2">Modular Smart Contracts!</Card.Title>
-          <p>Did someone say Inverter?</p>
+          <Card.Title tag="h2">Crossify Social Scraping!</Card.Title>
+          <p>Did someone say Crossify?</p>
           <Card.Actions className="justify-end">
             <Button size={'sm'} color="primary">
               Integrate Now

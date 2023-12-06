@@ -25,7 +25,7 @@ export default function HomePage() {
           'gap-5 flex flex-col md:flex-row lg:flex-row w-full justify-center'
         }
       >
-        <SortByMenu />
+        <SortByMenu isPending={isPending} />
         <SwiperCoinSelector
           coins={coins}
           isPending={isPending}

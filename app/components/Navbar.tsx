@@ -20,8 +20,8 @@ const NavItems = ({
 }) => {
   const arr = [
     { href: '/', label: 'Landing' },
-    { href: '/one', label: 'One' },
-    { href: '/two', label: 'two' },
+    // { href: '/one', label: 'One' },
+    // { href: '/two', label: 'two' },
   ]
 
   if (reverse) arr.reverse()

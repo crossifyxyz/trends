@@ -4,7 +4,7 @@ import { setComp, useAppDispatch, useAppSelector } from '@/lib/store'
 import { Coin } from '@/lib/types'
 import { Menu } from 'react-daisyui'
 
-export default function SortByMenu() {
+export default function SortByMenu({ isPending }: { isPending: boolean }) {
   const dispatch = useAppDispatch()
   const sortBy = useAppSelector((state) => state.comp.sortBy)
 
@@ -24,7 +24,7 @@ export default function SortByMenu() {
           ['t', 'Tweets'],
         ] as [keyof Coin, string][]
       ).map(([i, t]) => (
-        <Menu.Item key={i} onClick={() => setSortBy(i)}>
+        <Menu.Item key={i} onClick={() => setSortBy(i)} disabled={isPending}>
           <a className={`${sortBy === i && 'active'}`}>{t}</a>
         </Menu.Item>
       ))}

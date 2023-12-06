@@ -27,9 +27,8 @@ const openSans = Open_Sans({
 
 const title = 'Crossify Trends'
 const { description, applicationName, images } = {
-  applicationName: `${title} | Web3 Template`,
-  description:
-    'Easily edit and deploy your own web3 application with this template.',
+  applicationName: `${title} | Dapp`,
+  description: 'Snipe the market seamlessly.',
   images: [
     {
       url: 'crossifyxyz/assets/main/dark-social-banner.png',

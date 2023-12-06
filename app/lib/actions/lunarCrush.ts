@@ -1,7 +1,7 @@
 'use server'
 
 import { CacheType } from '../types'
-import { CoinsResponse } from '../types/lunarCrush'
+import { Coin, CoinsResponse } from '../types/lunarCrush'
 import connectDB from '../utils/connectDB'
 import handleRemoteCache from '../utils/handleRemoteCache'
 
@@ -19,9 +19,19 @@ export async function getCoins() {
     CacheType.LunarCrushCoins,
     handleFetch,
     {},
-    1,
+    0.15,
     true
   )
 
-  return cacheResponse
+  if (!cacheResponse.data) throw new Error('No cache response')
+
+  const filteredData: Coin[] = []
+
+  cacheResponse.data.data.forEach((coin) => {
+    if (!!coin.p) filteredData.push(coin)
+  })
+
+  console.log('COINS ACTION MSG', cacheResponse.message)
+
+  return { ...cacheResponse, data: { data: filteredData } }
 }

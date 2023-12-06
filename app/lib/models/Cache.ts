@@ -34,7 +34,12 @@ export default class CacheModel {
     (models.cache as MongoGenericModel<typeof CacheBaseSchema>) ||
     model('cache', CacheBaseSchema)
 
-  public static [CacheType.LunarCrushCoins] = this.Base.discriminator<
-    CacheBase & LunarCrushCoinsCache
-  >(CacheType.LunarCrushCoins, LunarCrushCoinCacheSchema)
+  public static [CacheType.LunarCrushCoins] =
+    (models.cache.discriminators?.[
+      CacheType.LunarCrushCoins
+    ] as MongoGenericModel<typeof LunarCrushCoinCacheSchema>) ||
+    this.Base.discriminator<CacheBase & LunarCrushCoinsCache>(
+      CacheType.LunarCrushCoins,
+      LunarCrushCoinCacheSchema
+    )
 }

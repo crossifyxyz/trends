@@ -1,96 +1,39 @@
 'use client'
 
-import { useState } from 'react'
-import { useDisclosure } from './hooks'
-import { Accordion, Pagination, Tabs } from './components'
-import { Button, Card, Divider, Menu, Modal, Skeleton } from 'react-daisyui'
+import useCoins from './hooks/useCoins'
+import SwiperCoinSelector from './components/SwiperCoinSelector'
+import CoinMetrics from './components/CoinMetrics'
+import { useAppSelector } from './lib/store'
+import SortByMenu from './components/SortByMenu'
 
 export default function HomePage() {
-  const { Dialog, handleShow } = Modal.useDialog()
-  const modalDisclosure = useDisclosure()
-  const [page, setPage] = useState(1)
-  const [number, setNumber] = useState<string>('')
-  const [tab, setTab] = useState(1)
+  const { coinsQuery } = useCoins()
+
+  const sortBy = useAppSelector((state) => state.comp.sortBy)
+
+  const isPending = coinsQuery.isLoading || coinsQuery.isLoading
+  const coins =
+    // @ts-ignore
+    coinsQuery.data?.data?.data.toSorted((a, b) => b[sortBy] - a[sortBy]) ?? []
+
+  const activeCoin = useAppSelector((state) => state.comp.activeDashbordCoin)
+
   return (
-    <div className="flex flex-col gap-3">
-      {/* Card */}
-      <Card>
-        <Card.Image
-          src="https://raw.githubusercontent.com/crossifyxyz/assets/main/dark-social-banner.png"
-          alt="Brand"
+    <div className={'flex flex-col items-center justify-center w-full'}>
+      <div
+        className={
+          'gap-5 flex flex-col md:flex-row lg:flex-row w-full justify-center'
+        }
+      >
+        <SortByMenu />
+        <SwiperCoinSelector
+          coins={coins}
+          isPending={isPending}
+          activeCoin={activeCoin}
+          className="max-w-full w-96 self-center"
         />
-        <Card.Body>
-          <Card.Title tag="h2">Crossify Social Scraping!</Card.Title>
-          <p>Did someone say Crossify?</p>
-          <Card.Actions className="justify-end">
-            <Button size={'sm'} color="primary">
-              Integrate Now
-            </Button>
-          </Card.Actions>
-        </Card.Body>
-      </Card>
-      <Divider />
-      {/* Tab */}
-      <Tabs
-        variant="boxed"
-        setTab={setTab}
-        tab={tab}
-        tabs={['Tab 1', 'Tab 2', 'Tab3']}
-      />
-      <Divider />
-      {/* Menu */}
-      <Menu className="bg-base-200 rounded-box">
-        <Menu.Item>
-          <a>Item 1</a>
-        </Menu.Item>
-        <Menu.Item>
-          <a>Item 2</a>
-        </Menu.Item>
-        <Menu.Item>
-          <Menu.Details label={'Sub Menu'}>
-            <Menu.Item>
-              <a>level 2 item 1</a>
-            </Menu.Item>
-            <Menu.Item>
-              <a>level 2 item 2</a>
-            </Menu.Item>
-          </Menu.Details>
-        </Menu.Item>
-      </Menu>
-      <Divider />
-      {/* Accordion */}
-      <Accordion
-        className={'bg-base-200'}
-        icon="arrow"
-        items={[
-          { label: 'Accordion 1', content: 'Content 1' },
-          { label: 'Accordion 2', content: 'Content 2' },
-          { label: 'Accordion 3', content: 'Content 3' },
-        ]}
-      />
-      <Divider />
-      {/* Modal */}
-      <Button onClick={handleShow}>Open Modal</Button>
-      <Dialog>
-        <Modal.Header className="font-bold">Hello!</Modal.Header>
-        <Modal.Body>This modal works with useDialog hook!</Modal.Body>
-        <Modal.Actions>
-          <form method="dialog">
-            <Button>Close</Button>
-          </form>
-        </Modal.Actions>
-      </Dialog>
-      <Divider />
-      {/* Skeleton */}
-      <div className="flex flex-col gap-4 w-52">
-        <Skeleton className="h-32 w-full"></Skeleton>
-        <Skeleton className="h-4 w-28"></Skeleton>
-        <Skeleton className="h-4 w-full"></Skeleton>
-        <Skeleton className="h-4 w-full"></Skeleton>
       </div>
-      <Divider />
-      {/* Pagination */}
-      <Pagination setPage={setPage} page={page} totalPages={10} />
+      <CoinMetrics coin={activeCoin} />
     </div>
   )
 }

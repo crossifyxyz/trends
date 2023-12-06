@@ -40,3 +40,15 @@ body {
   z-index: 10;
   width: max-content;
 }
+
+h1 {
+  @apply text-4xl font-extrabold;
+}
+
+h2 {
+  @apply text-2xl font-bold;
+}
+
+h3 {
+  @apply text-xl font-bold;
+}

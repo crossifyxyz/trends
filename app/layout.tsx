@@ -14,6 +14,12 @@ import { initialTheme } from '../styles'
 import { Open_Sans } from 'next/font/google'
 import '../styles/global.css'
 
+// Import Swiper styles
+import 'swiper/css'
+import 'swiper/css/effect-coverflow'
+import 'swiper/css/pagination'
+import 'swiper/css/virtual'
+
 const openSans = Open_Sans({
   subsets: ['latin'],
   display: 'swap',

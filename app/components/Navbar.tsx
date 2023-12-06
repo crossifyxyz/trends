@@ -55,7 +55,7 @@ export default function Navbar() {
       <WalletWidget />
 
       <div className="items-center lg:flex hidden gap-4">
-        <h1>|</h1>
+        <h3>|</h3>
         <NavItems pathname={pathname} />
       </div>
 

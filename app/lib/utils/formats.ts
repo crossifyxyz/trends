@@ -17,3 +17,25 @@ export function formatAmountString(input: string): string {
     sanitizedInput = `${integerPart}.${fractionalPart.replace(/[\.,]/g, '')}`
   return sanitizedInput
 }
+
+export function convertToInternationalCurrencySystem(
+  value: string | number | undefined
+) {
+  // Nine Zeroes for Billions
+  return Math.abs(Number(value)) >= 1.0e9
+    ? (Math.abs(Number(value)) / 1.0e9).toFixed(2) + 'B'
+    : // Six Zeroes for Millions
+      Math.abs(Number(value)) >= 1.0e6
+      ? (Math.abs(Number(value)) / 1.0e6).toFixed(2) + 'M'
+      : // Three Zeroes for Thousands
+        Math.abs(Number(value)) >= 1.0e3
+        ? (Math.abs(Number(value)) / 1.0e3).toFixed(2) + 'K'
+        : (() => {
+            const last = Math.abs(Number(value)).toFixed(5)
+            if (last === '0.00000') return '...'
+            return last
+          })()
+}
+
+export const getCoinIdFromName = (name: string) =>
+  name.toLowerCase().replace(/ /g, '-')

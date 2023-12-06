@@ -1,7 +1,11 @@
+import { Coin } from '@/lib/types/lunarCrush'
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-const initialState = {}
+const initialState = {
+  activeDashbordCoin: null as Coin | null,
+  sortBy: 'gs' as keyof Coin,
+}
 
 export const compSlice = createSlice({
   name: 'comp',

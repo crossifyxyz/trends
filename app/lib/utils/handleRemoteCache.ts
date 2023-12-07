@@ -1,6 +1,7 @@
 import { CacheModel } from '@/lib/models'
 import { CacheType } from '@/lib/types'
 import { unixTime } from '.'
+import connectDB from './connectDB'
 
 /**
  * Updates a specific cache model with new data if the existing data is outdated.
@@ -24,55 +25,54 @@ export default async function handleRemoteCache<T>(
   filter: Record<string, string> = {},
   thresholdHours: number = 12,
   insert: boolean = false
-): Promise<{ message: string; data?: Awaited<T> }> {
+): Promise<T> {
+  await connectDB()
   // Determine the cache model based on the provided name
   const DynamicCacheModel = CacheModel[modelName]
 
-  try {
-    const latestCache = (
-      await DynamicCacheModel.find(filter)
-        .sort({ updatedAt: -1 }) // sort in descending order
-        .limit(1) // get only one document
-        .lean()
-    )?.[0]
+  const latestCache = (
+    await DynamicCacheModel.find(filter)
+      .sort({ updatedAt: -1 }) // sort in descending order
+      .limit(1) // get only one document
+      .lean()
+  )?.[0]
 
-    const isUpToDate =
-      !!latestCache &&
-      latestCache.updatedAt + thresholdHours * 3_600 > unixTime()
+  const isUpToDate =
+    !!latestCache && latestCache.updatedAt + thresholdHours * 3_600 > unixTime()
 
-    if (isUpToDate)
-      return {
-        message: `${modelName} is up to date`,
-        data: latestCache.data as Awaited<T>,
-      }
+  // Return the latest cache if it exists and is up to date
+  if (isUpToDate) return latestCache.data as T
 
+  // Return the latest cache immediately
+  const result = Promise.resolve(latestCache.data as T)
+
+  // Perform the update or create actions in the background
+  result.then(async () => {
     // If no data exists or the data is outdated
     const latestData = await fetchLatestData()
 
     if (!latestData) throw new Error('Error fetching latest data')
 
-    const defaultCase = () =>
-      DynamicCacheModel.create({
+    const handleInsert = () => {
+      console.log(`INSERT NEW ${modelName} CACHE`)
+      return DynamicCacheModel.create({
         data: latestData,
       })
+    }
 
-    if (insert) {
-      await defaultCase()
-
-      return { message: `${modelName} inserted`, data: latestData }
-    } // Try to update existing document
+    if (insert) await handleInsert()
+    // Try to update existing document
     else {
+      console.log(`UPDATING ${modelName} CACHE`)
       const update = await DynamicCacheModel.findOneAndUpdate(filter, {
         data: latestData,
         updatedAt: unixTime(),
       }).lean()
 
       // If no document was updated, create a new one
-      if (!update) await defaultCase()
+      if (!update) await handleInsert()
     }
+  })
 
-    return { message: `${modelName} updated`, data: latestData }
-  } catch (err: any) {
-    return { message: err?.message as string, data: undefined }
-  }
+  return result
 }

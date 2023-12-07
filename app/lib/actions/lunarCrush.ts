@@ -2,12 +2,9 @@
 
 import { CacheType } from '../types'
 import { Coin, CoinsResponse } from '../types/lunarCrush'
-import connectDB from '../utils/connectDB'
 import handleRemoteCache from '../utils/handleRemoteCache'
 
 export async function getCoins() {
-  await connectDB()
-
   const handleFetch = (): Promise<CoinsResponse> =>
     fetch('https://lunarcrush.com/api4/coins?sort=galaxy_score&desc=1', {
       headers: {
@@ -19,7 +16,7 @@ export async function getCoins() {
     CacheType.LunarCrushCoins,
     handleFetch,
     {},
-    0.15,
+    0.2,
     true
   )
 
@@ -27,11 +24,9 @@ export async function getCoins() {
 
   const filteredData: Coin[] = []
 
-  cacheResponse.data.data.forEach((coin) => {
+  cacheResponse.data.forEach((coin) => {
     if (!!coin.p) filteredData.push(coin)
   })
-
-  console.log('COINS ACTION MSG', cacheResponse.message)
 
   return { ...cacheResponse, data: { data: filteredData } }
 }

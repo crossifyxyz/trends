@@ -4,11 +4,16 @@ import { Coin } from '@/lib/types'
 import { convertToInternationalCurrencySystem } from '@/lib/utils'
 import { Skeleton, Stats, Table } from 'react-daisyui'
 
-export default function CoinMetrics({ coin }: { coin: Coin | null }) {
-  console.log(coin)
+export default function CoinMetrics({
+  coin,
+  isPending,
+}: {
+  coin: Coin | null
+  isPending: boolean
+}) {
   return (
     <div className={'flex flex-col gap-4 items-center max-w-full'}>
-      {!!coin ? (
+      {!!coin && !isPending ? (
         <Stats className="shadow lg:scale-75 scale-50">
           <Stats.Stat>
             <Stats.Stat.Item variant="title">Price USD</Stats.Stat.Item>

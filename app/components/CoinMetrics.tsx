@@ -1,6 +1,6 @@
 'use client'
 
-import { Coin } from '@/lib/types'
+import { ReinforcedCoin } from '@/lib/types'
 import { convertToInternationalCurrencySystem } from '@/lib/utils'
 import { Skeleton, Stats, Table } from 'react-daisyui'
 
@@ -8,7 +8,7 @@ export default function CoinMetrics({
   coin,
   isPending,
 }: {
-  coin: Coin | null
+  coin: ReinforcedCoin | null
   isPending: boolean
 }) {
   return (
@@ -45,7 +45,7 @@ export default function CoinMetrics({
         <Skeleton className="h-6 w-52" />
       )}
 
-      {!!coin ? (
+      {!!coin && !isPending ? (
         <Table className="overflow-x-scroll">
           <Table.Head>
             <span>Metric</span>
@@ -54,53 +54,34 @@ export default function CoinMetrics({
           </Table.Head>
 
           <Table.Body>
-            {!!coin.gs && (
-              <Table.Row>
-                <span>Galaxy Score</span>
-                <span>Inspection</span>
-                <span>{coin.gs}</span>
-              </Table.Row>
-            )}
-            {!!coin.t && (
-              <Table.Row>
-                <span>Tweets</span>
-                <span>Inspection</span>
-                <span>{coin.t}</span>
-              </Table.Row>
-            )}
-            {!!coin.sd && (
-              <Table.Row>
-                <span>Social Dominance</span>
-                <span>Inspection</span>
-                <span>{coin.sd.toFixed(3)}%</span>
-              </Table.Row>
-            )}
             {[
-              ['1h', coin.pch],
-              ['24h', coin.pc],
-              ['7d', coin.pc7d],
+              [coin.sdPchLow.toFixed(0) + '%', 'Social 1h Low', '1h'],
+              [coin.gs, 'Galaxy Score'],
+              [coin.t, 'Tweets'],
+              [coin.sd.toFixed(5), 'Social Dominance'],
+              [coin.pch + '%', 'Price Change', '1h', true],
+              [coin.pc + '%', 'Price Change', '24h', true],
+              [coin.pc7d + '%', 'Price Change', '7d', true],
+              [convertToInternationalCurrencySystem(coin.v), 'Volume', '24h'],
             ].map(
-              (i) =>
-                !!i[1] && (
-                  <Table.Row key={i[0]}>
-                    <span>Price Change</span>
-                    <span>{i[0]}</span>
+              (i, index) =>
+                !!i[0] && (
+                  <Table.Row key={index}>
+                    <span>{i[1]}</span>
+                    <span>{i[2] ?? 'Inspection'}</span>
                     <span
                       className={
-                        Number(i[1]) > 0 ? 'text-success' : 'text-warning'
+                        !i[3]
+                          ? ''
+                          : Number(i[0]) > 0
+                            ? 'text-success'
+                            : 'text-warning'
                       }
                     >
-                      {i[1]}%
+                      {i[0]}
                     </span>
                   </Table.Row>
                 )
-            )}
-            {!!coin.v && (
-              <Table.Row>
-                <span>Volume</span>
-                <span>24h</span>
-                <span>{convertToInternationalCurrencySystem(coin.v)}</span>
-              </Table.Row>
             )}
           </Table.Body>
         </Table>

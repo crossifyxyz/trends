@@ -1,6 +1,6 @@
 import { useAppDispatch, setComp, useAppSelector } from '@/lib/store'
 import { Global, css } from '@emotion/react'
-import { Coin } from '@/lib/types'
+import { ReinforcedCoin } from '@/lib/types'
 import { Skeleton, Divider, Badge } from 'react-daisyui'
 import { EffectCoverflow, Virtual } from 'swiper/modules'
 import { SwiperClass, Swiper, SwiperSlide } from 'swiper/react'
@@ -13,8 +13,8 @@ export default function SwiperCoinSelector({
   isPending,
   ...props
 }: {
-  activeCoin: Coin | null
-  coins: Coin[]
+  activeCoin: ReinforcedCoin | null
+  coins: ReinforcedCoin[]
   isPending: boolean
 } & React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLDivElement>,

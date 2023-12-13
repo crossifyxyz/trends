@@ -6,16 +6,19 @@ import CoinMetrics from './components/CoinMetrics'
 import { setComp, useAppDispatch, useAppSelector } from './lib/store'
 import SortByMenu from './components/SortByMenu'
 import { useEffect } from 'react'
+import { useAppContext } from './providers'
 
 export default function HomePage() {
+  const { isHydrated } = useAppContext()
   const { coinsQuery } = useCoins()
 
   const sortBy = useAppSelector((state) => state.comp.sortBy)
 
-  const isPending = coinsQuery.isLoading || coinsQuery.isLoading
+  const isPending = coinsQuery.isLoading || coinsQuery.isLoading || !isHydrated
   const coins =
-    // @ts-ignore
-    coinsQuery.data?.data?.data.toSorted((a, b) => b[sortBy] - a[sortBy]) ?? []
+    coinsQuery.data?.data.toSorted(
+      (a, b) => Number(b[sortBy]) - Number(a[sortBy])
+    ) ?? []
 
   const activeCoin = useAppSelector((state) => state.comp.activeDashbordCoin)
 

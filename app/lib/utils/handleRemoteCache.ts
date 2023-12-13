@@ -47,32 +47,36 @@ export default async function handleRemoteCache<T>(
   const result = Promise.resolve(latestCache.data as T)
 
   // Perform the update or create actions in the background
-  result.then(async () => {
-    // If no data exists or the data is outdated
-    const latestData = await fetchLatestData()
+  result
+    .then(async () => {
+      // If no data exists or the data is outdated
+      const latestData = await fetchLatestData()
 
-    if (!latestData) throw new Error('Error fetching latest data')
+      if (!latestData) throw new Error('Error fetching latest data')
 
-    const handleInsert = () => {
-      console.log(`INSERT NEW ${modelName} CACHE`)
-      return DynamicCacheModel.create({
-        data: latestData,
-      })
-    }
+      const handleInsert = () => {
+        console.log(`INSERT NEW ${modelName} CACHE`)
+        return DynamicCacheModel.create({
+          data: latestData,
+        })
+      }
 
-    if (insert) await handleInsert()
-    // Try to update existing document
-    else {
-      console.log(`UPDATING ${modelName} CACHE`)
-      const update = await DynamicCacheModel.findOneAndUpdate(filter, {
-        data: latestData,
-        updatedAt: unixTime(),
-      }).lean()
+      if (insert) await handleInsert()
+      // Try to update existing document
+      else {
+        console.log(`UPDATING ${modelName} CACHE`)
+        const update = await DynamicCacheModel.findOneAndUpdate(filter, {
+          data: latestData,
+          updatedAt: unixTime(),
+        }).lean()
 
-      // If no document was updated, create a new one
-      if (!update) await handleInsert()
-    }
-  })
+        // If no document was updated, create a new one
+        if (!update) await handleInsert()
+      }
+    })
+    .catch((err) => {
+      console.error(err)
+    })
 
   return result
 }

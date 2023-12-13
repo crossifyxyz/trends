@@ -52,3 +52,11 @@ export interface Coin {
   categories: string
   chains: string
 }
+
+export interface ReinforcedCoin extends Coin {
+  sdPchLow: number
+}
+
+export interface ReinforcedCoinsResponse extends CoinsResponse {
+  data: ReinforcedCoin[]
+}

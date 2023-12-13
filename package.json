@@ -1,5 +1,5 @@
 {
-  "name": "nextjs-web3",
+  "name": "trends",
   "private": false,
   "scripts": {
     "prepare": "husky install",
@@ -38,6 +38,7 @@
     "next": "latest",
     "next-app-session": "^1.0.7",
     "next-nprogress-bar": "^2.1.2",
+    "node-cache": "^5.1.2",
     "react": "18.2.0",
     "react-daisyui": "^5.0.0",
     "react-dom": "18.2.0",

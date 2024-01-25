@@ -37,6 +37,7 @@ export default function HomePage() {
       >
         <SortByMenu isPending={isPending} />
         <SwiperCoinSelector
+          timestamp={coinsQuery.dataUpdatedAt}
           coins={coins}
           isPending={isPending}
           activeCoin={activeCoin}

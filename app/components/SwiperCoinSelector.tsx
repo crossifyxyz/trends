@@ -6,16 +6,19 @@ import { EffectCoverflow, Virtual } from 'swiper/modules'
 import { SwiperClass, Swiper, SwiperSlide } from 'swiper/react'
 import { getCoinIdFromName } from '@/lib/utils'
 import { useEffect, useState } from 'react'
+import Countdown from './ui/Countdown'
 
 export default function SwiperCoinSelector({
   activeCoin,
   coins,
   isPending,
+  timestamp,
   ...props
 }: {
   activeCoin: ReinforcedCoin | null
   coins: ReinforcedCoin[]
   isPending: boolean
+  timestamp?: number
 } & React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLDivElement>,
   HTMLDivElement
@@ -57,6 +60,7 @@ export default function SwiperCoinSelector({
           >
             {activeCoin.n}
           </h2>
+          {/* <Countdown timestamp={timestamp} seconds={20 * 60} /> */}
           <Badge outline>{activeCoin.s}</Badge>
         </div>
       )}

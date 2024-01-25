@@ -9,6 +9,7 @@ export default function useCoins() {
   const coinsQuery = useQuery({
     queryKey: ['coins'],
     queryFn: () => serverAction(getCoins),
+    staleTime: 1000 * 60 * 20, // 20 minutes
   })
 
   return { coinsQuery }
